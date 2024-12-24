@@ -1,0 +1,78 @@
+<odoo>
+  <record id="view_order_form_custom" model="ir.ui.view">
+    <field name="name">sale.order.form.custom</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='partner_id']" position="after">
+        <div class="o_row" style="display: flex; align-items: center; flex-wrap: nowrap; gap: 20px;">
+          <!-- Thời gian hợp đồng -->
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="width: auto; white-space: nowrap; font-weight: bold;">Thời gian hợp đồng </span>
+            <div class="o_col col-12" style="width: 100%;">
+              <field name="x_contract_duration" style="width: 50px;" />
+            </div>
+            <div class="o_col col-6">
+              <div class="o_form_group" style="display: flex; align-items: center;">
+                <field name="x_contract_time_type" style="display: none;" />
+                <div style="display: inline-block; width: auto;">
+                  <field name="x_contract_time_type" nolabel="1" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </xpath>
+      <xpath expr="//sheet" position="inside">
+        <group>
+          <div class="o_cell flex-grow-1 flex-sm-grow-0" style="width: 300px; flex-wrap: nowrap;">
+            <field name="contract_note" />
+          </div>
+        </group>
+      </xpath>
+    </field>
+  </record>
+</odoo>
+
+
+<!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="contract_duration.action_window">
+      <field name="name">contract_duration window</field>
+      <field name="res_model">contract_duration.contract_duration</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+<!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="contract_duration.action_server">
+      <field name="name">contract_duration server</field>
+      <field name="model_id" ref="model_contract_duration_contract_duration"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+<!-- Top menu item -->
+<!--
+    <menuitem name="contract_duration" id="contract_duration.menu_root"/>
+-->
+<!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="contract_duration.menu_1" parent="contract_duration.menu_root"/>
+    <menuitem name="Menu 2" id="contract_duration.menu_2" parent="contract_duration.menu_root"/>
+-->
+<!-- actions -->
+<!--
+    <menuitem name="List" id="contract_duration.menu_1_list" parent="contract_duration.menu_1"
+              action="contract_duration.action_window"/>
+    <menuitem name="Server to list" id="contract_duration" parent="contract_duration.menu_2"
+              action="contract_duration.action_server"/>
+-->
