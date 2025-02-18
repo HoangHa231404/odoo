@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "contract",
+    'name': "rule_contract",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,28 +20,28 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base',
-                'sale',
-                'product'],
-    'installable': True,
-    'auto_install': False,
+    'depends': ['base' , 'sale' , 'mail'],
+
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
         'security/contract_security.xml',
-        'security/contract_record_rule.xml',
-        'views/contracts.xml',
-        'views/sale_order.xml',
-        'views/contract_status_view.xml',
+        'security/ir.model.access.csv',
+        'views/contract_view.xml',
+        'views/res_users_view.xml',
         'views/templates.xml',
     ],
+
+    'installable': True,
+    'application': True,
+
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
     ],
+
     'assets': {
         'web.assets_backend': [
-            'contract/static/src/style.css',
+            'rule_contract/static/src/style.css',
         ],
     },
 }

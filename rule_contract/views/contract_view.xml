@@ -1,0 +1,34 @@
+<!-- File: views/contract_views.xml -->
+<odoo>
+    <record id="view_custom_contract_form" model="ir.ui.view">
+        <field name="name">custom.contract.form</field>
+        <field name="model">custom.contract</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_send_to_manager" 
+                            string="Gửi phê duyệt" 
+                            type="object" 
+                            class="btn-primary"
+                            groups="group_contract_sale_user"
+                            states="draft"/>
+                    
+                    <button name="action_manager_approve" 
+                            string="Phê duyệt (QL)" 
+                            type="object" 
+                            class="btn-success"
+                            groups="group_contract_sale_manager"
+                            states="manager_approve"/>
+                    
+                    <button name="action_director_approve" 
+                            string="Phê duyệt (GĐ)" 
+                            type="object" 
+                            class="btn-success"
+                            groups="group_contract_director"
+                            states="director_approve"/>
+                </header>
+                <!-- Thêm các trường khác -->
+            </form>
+        </field>
+    </record>
+</odoo>

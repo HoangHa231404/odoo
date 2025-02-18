@@ -13,12 +13,16 @@ class ContractModel(models.Model):
     end_date = fields.Date(string='End Date', store=True, compute='_compute_end_date')
     product_ids = fields.Many2many('product.product', string='Product')
     order_ids = fields.One2many('sale.order', 'contract_id', string='Orders')
-    status = fields.Selection(
-       [('draft', 'Nháp'),
-        ('manager_approve', 'Chờ Quản lý phê duyệt'),
-        ('director_approve', 'Chờ Giám đốc phê duyệt'),
-        ('approved', 'Đã phê duyệt')],
-        default='draft', string="Trạng thái")
+    state = fields.Selection(
+        selection=[
+            ('draft', 'Nháp'),
+            ('waiting_manager', 'Chờ Quản lý phê duyệt'),
+            ('waiting_director', 'Chờ Giám đốc phê duyệt'),
+            ('approved', 'Đã phê duyệt')
+        ],
+        string='Trạng thái',
+        default='draft'
+    )
 
     @api.depends('start_date')
     def _compute_end_date(self):
@@ -31,3 +35,5 @@ class ContractModel(models.Model):
         if self.contract_name:
             action.name = self.contract_name
         return action
+
+

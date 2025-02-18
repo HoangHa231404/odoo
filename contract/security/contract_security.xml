@@ -1,0 +1,23 @@
+<odoo>
+    <!-- <record id="contract_sale_rule" model="ir.rule">
+        <field name="name">Sale - Chỉ xem và phê duyệt hợp đồng Nháp</field>
+        <field name="model_id" ref="model_contract_model" />
+        <field name="groups" eval="[(4, ref('contract.group_contract_sale'))]" />
+        <field name="domain_force">[('state', '=', 'draft')]</field>
+    </record>
+
+    <record id="contract_manager_rule" model="ir.rule">
+        <field name="name">Manager - Chỉ xem và phê duyệt hợp đồng Chờ Quản lý</field>
+        <field name="model_id" ref="model_contract_model" />
+        <field name="groups" eval="[(4, ref('contract.group_contract_manager'))]" />
+        <field name="domain_force">[('state', '=', 'waiting_manager')]</field>
+    </record>
+
+    <record id="contract_director_rule" model="ir.rule">
+        <field name="name">Director - Chỉ xem và phê duyệt hợp đồng Chờ Giám đốc</field>
+        <field name="model_id" ref="model_contract_model" />
+        <field name="groups" eval="[(4, ref('contract.group_contract_director'))]" />
+        <field name="domain_force">[('state', '=', 'waiting_director')]</field>
+    </record> -->
+
+</odoo>

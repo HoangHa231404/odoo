@@ -4,11 +4,11 @@ class Contract(models.Model):
     _inherit = 'contract.model'
 
     STATE_SELECTION = [
-        ('draft', 'Nháp'),
-        ('manager_approve', 'Chờ Quản lý phê duyệt'),
-        ('director_approve', 'Chờ Giám đốc phê duyệt'),
-        ('approved', 'Đã phê duyệt'),
-    ]
+            ('draft', 'Nháp'),
+            ('waiting_manager', 'Chờ Quản lý phê duyệt'),
+            ('waiting_director', 'Chờ Giám đốc phê duyệt'),
+            ('approved', 'Đã phê duyệt')
+        ]
 
     state = fields.Selection(
         selection=STATE_SELECTION,
@@ -19,33 +19,32 @@ class Contract(models.Model):
 
     manager_approved = fields.Boolean(string="Quản lý phê duyệt")
     director_approved = fields.Boolean(string="Giám đốc phê duyệt")
+    current_approver_id = fields.Many2one('res.users', string="Người cần phê duyệt", tracking=True)
     
 
-    def action_manager_approve(self):
-        for contract in self:
-            if contract.state != 'draft':
-                raise exceptions.UserError("Hợp đồng không ở trạng thái Nháp.")
-            if not self.env.user.has_group('sales_team.group_sale_manager'):
-                raise exceptions.AccessError("Chỉ Quản lý Sale được phép phê duyệt.")
-            contract.write({'state': 'manager_approve', 'manager_approved': True})
+    def action_approve_sale(self):
+        if self.state != 'draft':
+            raise exceptions.UserError("Chỉ được phê duyệt khi ở trạng thái Nháp!")
+        self.write({
+            'state': 'waiting_manager',
+            'current_approver_id': self.env.ref('sales_team.group_sale_manager').users[:1].id  # Gán user quản lý
+        })
 
-    def action_director_approve(self):
-        for contract in self:
-            if contract.state != 'manager_approve':
-                raise exceptions.UserError("Hợp đồng không ở trạng thái Chờ Quản lý phê duyệt.")
-            if not self.env.user.has_group('base.group_user'):
-                raise exceptions.AccessError("Chỉ Giám đốc được phép phê duyệt.")
-            contract.write({'state': 'director_approve', 'director_approved': True})
+    def action_approve_manager(self):
+        if self.state != 'waiting_manager':
+            raise exceptions.UserError("Chỉ được phê duyệt khi ở trạng thái Chờ Quản lý!")
+        self.write({
+            'state': 'waiting_director',
+            'current_approver_id': self.env.ref('base.group_user').users[:1].id  # Gán user giám đốc
+        })
 
-    def action_approve(self):
-        for contract in self:
-            if contract.state != 'director_approve':
-                raise exceptions.UserError("Hợp đồng không ở trạng thái Chờ Giám đốc phê duyệt.")
-            if not self.env.user.has_group('base.group_user'):
-                raise exceptions.AccessError("Chỉ Giám đốc được phép phê duyệt cuối cùng.")
-            contract.write({'state': 'approved'})
-
-
+    def action_approve_director(self):
+        if self.state != 'waiting_director':
+            raise exceptions.UserError("Chỉ được phê duyệt khi ở trạng thái Chờ Giám đốc!")
+        self.write({
+            'state': 'approved',
+            'current_approver_id': False  # Không cần ai phê duyệt nữa
+        })
 
     @api.model
     def create(self, vals_list):
