@@ -9,21 +9,21 @@
                     <div class="o_form_statusbar">
                         <div style="display: flex; gap: 10px;">
                             <button name="action_approve_sale" type="object"
-                                string="Quản lý phê duyệt"
+                                string="Gửi phê duyệt"
                                 attrs="{'invisible': [('state', '!=', 'draft')]}"
                                 class="btn-primary"
                                 groups="contract.group_contract_sale_user"
                                 refresh="1" />
 
                             <button name="action_approve_manager" type="object"
-                                string="Giám đốc phê duyệt"
+                                string="Quản lý phê duyệt"
                                 attrs="{'invisible': [('state', '!=', 'waiting_manager')]}"
                                 class="btn-primary"
                                 groups="contract.group_contract_sale_manager"
                                 refresh="1" />
 
                             <button name="action_approve_director" type="object"
-                                string="Hoàn thành phê duyệt"
+                                string="Giám đốc phê duyệt"
                                 attrs="{'invisible': [('state', '!=', 'waiting_director')]}"
                                 class="btn-primary"
                                 groups="contract.group_contract_director"

@@ -52,14 +52,14 @@
     <menuitem id="menu_contract_management"
       name="Quản lý hợp đồng"
       parent="menu_contract_root"
-      sequence="20"
+      sequence="1"
       groups="base.group_user" />
 
     <menuitem id="menu_contract_model"
       name="Hợp đồng"
       parent="menu_contract_management"
       action="action_contract"
-      sequence="30"
+      sequence="1"
       groups="base.group_user" />
 
   </data>
